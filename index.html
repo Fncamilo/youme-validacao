@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Validação · YOU-ME 6 sites</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a1a;
+    --ink-2: #444;
+    --mute: #888;
+    --rule: #ececec;
+    --rule-2: #f5f5f5;
+    --gold: #d4c47a;
+    --gold-bg: #fbf8ec;
+    --green: #2a8736;
+    --green-bg: #e8f3ea;
+    --red: #c4271e;
+  }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--ink);
+    background: #fafafa;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.005em;
+  }
+  .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    background: #fff;
+    border-bottom: 1px solid var(--rule);
+    padding: 28px 0;
+  }
+  .header-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+  }
+  .header-eyebrow { display: flex; align-items: center; color: var(--ink); }
+  .header-eyebrow::before {
+    content: ""; width: 32px; height: 2px;
+    background: var(--gold); margin-right: 14px;
+  }
+  .header-date { color: var(--mute); }
+
+  .hero { padding: 56px 0 20px; }
+  .hero-kicker {
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.22em; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: 38px; font-weight: 400;
+    line-height: 1.08; letter-spacing: -0.035em;
+    margin-bottom: 14px;
+  }
+  .hero h1 strong { font-weight: 700; }
+  .hero p {
+    font-size: 15px; color: var(--ink-2);
+    line-height: 1.55; max-width: 540px;
+  }
+  .progress {
+    margin: 28px 0 0;
+    padding: 14px 18px;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .progress-num {
+    font-size: 26px; font-weight: 700;
+    color: var(--gold); letter-spacing: -0.03em;
+    min-width: 50px;
+  }
+  .progress-num strong { color: var(--ink); }
+  .progress-label {
+    font-size: 11px; color: var(--mute);
+    text-transform: uppercase; letter-spacing: 0.16em; font-weight: 600;
+    white-space: nowrap;
+  }
+  .progress-bar {
+    flex: 1; height: 6px;
+    background: var(--rule-2); border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: var(--green);
+    width: 0%; transition: width 0.3s ease;
+  }
+
+  .items { padding: 28px 0 24px; }
+  .item {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .item.done { border-color: var(--green); }
+  .item.issue { border-color: var(--red); }
+  .item-head {
+    padding: 18px 20px 12px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .item-num {
+    font-size: 11px; font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.16em; text-transform: uppercase;
+    min-width: 26px; padding-top: 4px;
+  }
+  .item-meta { flex: 1; }
+  .item-title {
+    font-size: 17px; font-weight: 700;
+    letter-spacing: -0.015em; margin-bottom: 3px;
+  }
+  .item-desc {
+    font-size: 13.5px; color: var(--ink-2);
+    line-height: 1.5;
+  }
+  .item-links {
+    padding: 0 20px 12px;
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .link-chip {
+    display: inline-flex; align-items: center;
+    padding: 6px 11px;
+    border: 1px solid var(--rule); border-radius: 100px;
+    font-size: 12px; color: var(--ink);
+    text-decoration: none; transition: all 0.15s;
+    font-weight: 500;
+  }
+  .link-chip:hover { border-color: var(--gold); background: var(--gold-bg); }
+  .link-chip::after { content: " →"; color: var(--gold); margin-left: 4px; }
+
+  .item-actions {
+    border-top: 1px solid var(--rule);
+    background: var(--rule-2);
+    padding: 14px 20px;
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+  }
+  .choice {
+    display: inline-flex; align-items: center;
+    padding: 8px 16px; border-radius: 100px;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s;
+    background: #fff; border: 1px solid var(--rule);
+    color: var(--ink-2); user-select: none;
+  }
+  .choice input { display: none; }
+  .choice:hover { border-color: var(--mute); }
+  .choice.ok-choice.selected {
+    background: var(--green); border-color: var(--green); color: #fff;
+  }
+  .choice.issue-choice.selected {
+    background: var(--red); border-color: var(--red); color: #fff;
+  }
+  .item-feedback {
+    width: 100%; margin-top: 8px;
+    padding: 10px 12px;
+    border: 1px solid var(--rule); border-radius: 6px;
+    font-family: inherit; font-size: 13px;
+    resize: vertical; min-height: 60px;
+    display: none; background: #fff;
+  }
+  .item.issue .item-feedback { display: block; }
+  .sync-indicator {
+    margin-left: auto;
+    font-size: 11px; color: var(--mute);
+    font-weight: 500;
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .sync-indicator.show { opacity: 1; }
+  .sync-indicator.ok { color: var(--green); }
+
+  .approve-section {
+    background: #fff;
+    border: 2px solid var(--rule);
+    border-radius: 12px;
+    padding: 30px 22px;
+    margin: 28px 0 60px;
+    text-align: center;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .approve-section.ready {
+    border-color: var(--green);
+    background: var(--green-bg);
+  }
+  .approve-eyebrow {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.22em; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .approve-title {
+    font-size: 21px; font-weight: 700;
+    letter-spacing: -0.02em; margin-bottom: 8px;
+    line-height: 1.25;
+  }
+  .approve-sub {
+    font-size: 13px; color: var(--ink-2);
+    margin-bottom: 20px;
+  }
+  .approve-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 14px 26px;
+    background: var(--ink); color: #fff;
+    border: none; border-radius: 100px;
+    font-family: inherit; font-size: 13px;
+    font-weight: 700; letter-spacing: 0.05em;
+    text-transform: uppercase; cursor: pointer;
+    text-decoration: none; transition: all 0.2s;
+    opacity: 0.4; pointer-events: none;
+  }
+  .approve-btn.ready {
+    background: var(--green); opacity: 1; pointer-events: auto;
+  }
+  .approve-btn.ready:hover {
+    background: #1f6628; transform: translateY(-1px);
+  }
+  .approve-btn::before { content: "✓ "; margin-right: 6px; }
+  .approve-help {
+    font-size: 12px; color: var(--mute); margin-top: 14px;
+  }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    background: #fff;
+    padding: 24px 0;
+    text-align: center;
+    font-size: 12px; color: var(--mute);
+  }
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: var(--rule-2);
+    padding: 1px 6px;
+    border-radius: 3px;
+    color: var(--ink);
+  }
+  @media (max-width: 600px) {
+    .hero { padding: 36px 0 14px; }
+    .hero h1 { font-size: 30px; }
+    .item-head { padding: 16px 16px 10px; gap: 10px; }
+    .item-title { font-size: 15px; }
+    .item-links, .item-actions { padding-left: 16px; padding-right: 16px; }
+    .approve-section { padding: 22px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container header-row">
+    <span class="header-eyebrow">Validação · 6 sites</span>
+    <span class="header-date">YOU-ME</span>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <div class="hero-kicker">Documento de validação</div>
+    <h1>Confere se tá tudo<br><strong>do jeito que você queria.</strong></h1>
+    <p>5 minutos. Abre cada item, dá uma olhada e marca se tá OK ou se precisa de ajuste. Cada marcação é salva automaticamente.</p>
+
+    <div class="progress">
+      <div class="progress-num"><strong id="pdone">0</strong>/5</div>
+      <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+      <div class="progress-label">validados</div>
+    </div>
+  </section>
+
+  <section class="items" id="items">
+
+    <div class="item" data-id="1">
+      <div class="item-head">
+        <div class="item-num">01</div>
+        <div class="item-meta">
+          <div class="item-title">Árvore de links · 4 sites novos</div>
+          <div class="item-desc">Abre cada um no celular. Cover, avatar circular, biografia, countdown e os botões pra OnlyFans/Privacy/Telegram. Tá tudo no lugar?</div>
+        </div>
+      </div>
+      <div class="item-links">
+        <a class="link-chip" href="https://cmtanasenna.com/" target="_blank">cmtanasenna.com</a>
+        <a class="link-chip" href="https://anacomandante.com/" target="_blank">anacomandante.com</a>
+        <a class="link-chip" href="https://linlaura.com/" target="_blank">linlaura.com</a>
+        <a class="link-chip" href="https://donalauralin.com/" target="_blank">donalauralin.com</a>
+      </div>
+      <div class="item-actions">
+        <label class="choice ok-choice"><input type="radio" name="r1" value="ok">tudo certo</label>
+        <label class="choice issue-choice"><input type="radio" name="r1" value="issue">precisa ajustar</label>
+        <span class="sync-indicator" data-id="1"></span>
+        <textarea class="item-feedback" placeholder="O que precisa ajustar?"></textarea>
+      </div>
+    </div>
+
+    <div class="item" data-id="2">
+      <div class="item-head">
+        <div class="item-num">02</div>
+        <div class="item-meta">
+          <div class="item-title">Páginas promo · 2 sites migrados</div>
+          <div class="item-desc">As páginas promo novas: Ana do Boteco com countdown + @anadoboteco, e Laura Lin coroa VIP. Sem mexer nas páginas antigas.</div>
+        </div>
+      </div>
+      <div class="item-links">
+        <a class="link-chip" href="https://anasenna.com/promocao-boteco-vip/" target="_blank">anasenna.com/promocao-boteco-vip</a>
+        <a class="link-chip" href="https://lauralinof.com/promocao-coroa-vip/" target="_blank">lauralinof.com/promocao-coroa-vip</a>
+      </div>
+      <div class="item-actions">
+        <label class="choice ok-choice"><input type="radio" name="r2" value="ok">tudo certo</label>
+        <label class="choice issue-choice"><input type="radio" name="r2" value="issue">precisa ajustar</label>
+        <span class="sync-indicator" data-id="2"></span>
+        <textarea class="item-feedback" placeholder="O que precisa ajustar?"></textarea>
+      </div>
+    </div>
+
+    <div class="item" data-id="3">
+      <div class="item-head">
+        <div class="item-num">03</div>
+        <div class="item-meta">
+          <div class="item-title">Pressells · arrasta, tinder e tutorial</div>
+          <div class="item-desc">3 pressells por site, 18 no total. Cada um com a foto certa da modelo, nome+idade e redireciona pra árvore ou promo. Testa pelo menos 1 de cada site.</div>
+        </div>
+      </div>
+      <div class="item-links">
+        <a class="link-chip" href="https://cmtanasenna.com/pressell-tinder/" target="_blank">cmt · tinder</a>
+        <a class="link-chip" href="https://anacomandante.com/pressell-tinder/" target="_blank">anacmd · tinder</a>
+        <a class="link-chip" href="https://linlaura.com/pressell-tinder/" target="_blank">linlaura · tinder</a>
+        <a class="link-chip" href="https://donalauralin.com/pressell-tinder/" target="_blank">dlauralin · tinder</a>
+        <a class="link-chip" href="https://anasenna.com/pressell-tinder/" target="_blank">anasenna · tinder</a>
+        <a class="link-chip" href="https://lauralinof.com/pressell-tinder/" target="_blank">lauralinof · tinder</a>
+      </div>
+      <div class="item-actions">
+        <label class="choice ok-choice"><input type="radio" name="r3" value="ok">tudo certo</label>
+        <label class="choice issue-choice"><input type="radio" name="r3" value="issue">precisa ajustar</label>
+        <span class="sync-indicator" data-id="3"></span>
+        <textarea class="item-feedback" placeholder="Qual site / qual ajuste?"></textarea>
+      </div>
+    </div>
+
+    <div class="item" data-id="4">
+      <div class="item-head">
+        <div class="item-num">04</div>
+        <div class="item-meta">
+          <div class="item-title">Google Analytics · tá rastreando?</div>
+          <div class="item-desc">Abre o GA4 no celular, vai em <em>Relatórios → Tempo real</em>, e em paralelo abre os sites no Chrome anônimo. Tem que aparecer "1 usuário ativo" pra cada.</div>
+        </div>
+      </div>
+      <div class="item-links">
+        <a class="link-chip" href="https://analytics.google.com/analytics/web/" target="_blank">analytics.google.com</a>
+      </div>
+      <div class="item-actions">
+        <label class="choice ok-choice"><input type="radio" name="r4" value="ok">aparece nos relatórios</label>
+        <label class="choice issue-choice"><input type="radio" name="r4" value="issue">não aparece</label>
+        <span class="sync-indicator" data-id="4"></span>
+        <textarea class="item-feedback" placeholder="Qual site não tá aparecendo?"></textarea>
+      </div>
+    </div>
+
+    <div class="item" data-id="5">
+      <div class="item-head">
+        <div class="item-num">05</div>
+        <div class="item-meta">
+          <div class="item-title">Acessos funcionando</div>
+          <div class="item-desc">Loga no painel TurboCloud com seu email/senha. Entra em qualquer cPanel e clica em Softaculous → WordPress Login. Conseguiu entrar?</div>
+        </div>
+      </div>
+      <div class="item-links">
+        <a class="link-chip" href="https://app.turbocloud.com.br/store/" target="_blank">TurboCloud</a>
+        <a class="link-chip" href="https://cmtanasenna.com:2083/" target="_blank">cPanel · cmtanasenna</a>
+      </div>
+      <div class="item-actions">
+        <label class="choice ok-choice"><input type="radio" name="r5" value="ok">consigo logar</label>
+        <label class="choice issue-choice"><input type="radio" name="r5" value="issue">tô com problema</label>
+        <span class="sync-indicator" data-id="5"></span>
+        <textarea class="item-feedback" placeholder="Qual acesso não funciona?"></textarea>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="approve-section" id="approveSection">
+    <div class="approve-eyebrow">Última etapa</div>
+    <div class="approve-title">Aprovar a entrega</div>
+    <div class="approve-sub">Quando todos os 5 itens estiverem marcados, esse botão libera. Clicando, abre o WhatsApp já com a mensagem montada — é só apertar enviar.</div>
+    <a class="approve-btn" id="approveBtn" href="#">Aprovar entrega</a>
+    <div class="approve-help">Em caso de ajuste, manda o detalhe junto que eu resolvo em até 24h.</div>
+  </section>
+
+</main>
+
+<footer>
+  Documento gerado em 19/05/2026 · fernandoapcamilo@gmail.com
+</footer>
+
+<script>
+  const TOTAL = 5;
+  const WHATSAPP_NUM = '5511958878882';
+  const WEBHOOK = 'https://script.google.com/macros/s/AKfycbxtTgWVns0oJ2i3X6bHaKB2RpO7_le07agiye0A0SClplUOUGHnfWiYsDDJg5nqYgku/exec';
+  const STORAGE_KEY = 'youme-validacao-v1';
+
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+    catch(e){ return {}; }
+  }
+  function saveState(s) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch(e){}
+  }
+
+  function showSync(id, status) {
+    const ind = document.querySelector(`.sync-indicator[data-id="${id}"]`);
+    if (!ind) return;
+    ind.className = 'sync-indicator show ' + (status === 'sent' ? 'ok' : '');
+    ind.textContent = status === 'sending' ? 'enviando...' : status === 'sent' ? '✓ enviado' : status === 'err' ? '⚠ erro' : '';
+    if (status === 'sent') {
+      setTimeout(() => ind.classList.remove('show'), 2000);
+    }
+  }
+
+  async function sendItem(id, status, comentario, isFinal=false) {
+    if (!isFinal) showSync(id, 'sending');
+    const payload = {
+      item: isFinal ? 'APPROVE' : String(id),
+      status: status,
+      comentario: comentario || '',
+      user_agent: navigator.userAgent.substring(0, 200)
+    };
+    try {
+      await fetch(WEBHOOK, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify(payload)
+      });
+      if (!isFinal) showSync(id, 'sent');
+    } catch(e) {
+      if (!isFinal) showSync(id, 'err');
+    }
+  }
+
+  // Debounce per item
+  const debouncers = {};
+  function debouncedSend(id, status, comentario) {
+    clearTimeout(debouncers[id]);
+    debouncers[id] = setTimeout(() => sendItem(id, status, comentario), 800);
+  }
+
+  function update(skipSend=false) {
+    let done = 0;
+    let issues = [];
+    const state = loadState();
+    for (let i = 1; i <= TOTAL; i++) {
+      const item = document.querySelector(`.item[data-id="${i}"]`);
+      const radio = item.querySelector(`input[name="r${i}"]:checked`);
+      const fb = item.querySelector('.item-feedback').value;
+      const choices = item.querySelectorAll('.choice');
+      choices.forEach(c => c.classList.remove('selected'));
+      item.classList.remove('done', 'issue');
+      if (radio) {
+        done++;
+        const newStatus = radio.value;
+        if (newStatus === 'ok') {
+          item.classList.add('done');
+          item.querySelector('.ok-choice').classList.add('selected');
+        } else {
+          item.classList.add('issue');
+          item.querySelector('.issue-choice').classList.add('selected');
+          issues.push({i, fb});
+        }
+        const prev = state['r'+i];
+        if (!skipSend && (!prev || prev.status !== newStatus || prev.fb !== fb)) {
+          debouncedSend(i, newStatus, fb);
+        }
+        state['r'+i] = {status: newStatus, fb};
+      }
+    }
+    saveState(state);
+    document.getElementById('pdone').textContent = done;
+    document.getElementById('pfill').style.width = (done / TOTAL * 100) + '%';
+
+    const btn = document.getElementById('approveBtn');
+    const section = document.getElementById('approveSection');
+    if (done === TOTAL) {
+      btn.classList.add('ready');
+      section.classList.add('ready');
+      const titles = ['Árvore links 4 novos','Páginas promo 2 migrados','Pressells','Google Analytics','Acessos'];
+      let msg = 'Validação YOU-ME · 6 sites\n\n';
+      for (let i = 1; i <= TOTAL; i++) {
+        const item = document.querySelector(`.item[data-id="${i}"]`);
+        const radio = item.querySelector(`input[name="r${i}"]:checked`);
+        const fb = item.querySelector('.item-feedback').value.trim();
+        const icon = radio.value === 'ok' ? '✅' : '⚠️';
+        const detail = radio.value === 'issue' && fb ? ` — ${fb}` : '';
+        msg += `${icon} ${i.toString().padStart(2,'0')}. ${titles[i-1]}${detail}\n`;
+      }
+      if (issues.length === 0) {
+        msg += '\nTá tudo certo. Pode emitir a NF #2.';
+      } else {
+        msg += `\nPrecisa ajustar os ${issues.length} item(s) acima.`;
+      }
+      btn.href = `https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent(msg)}`;
+      btn.textContent = issues.length === 0 ? 'Aprovar entrega' : `Enviar feedback (${issues.length} ajuste${issues.length>1?'s':''})`;
+      btn.onclick = function() {
+        sendItem('APPROVE', issues.length === 0 ? 'approved' : 'approved_with_issues', msg, true);
+      };
+    } else {
+      btn.classList.remove('ready');
+      section.classList.remove('ready');
+      btn.href = '#';
+    }
+  }
+
+  // Restore from localStorage
+  function restore() {
+    const state = loadState();
+    for (let i = 1; i <= TOTAL; i++) {
+      const data = state['r'+i];
+      if (!data) continue;
+      const radio = document.querySelector(`input[name="r${i}"][value="${data.status}"]`);
+      if (radio) radio.checked = true;
+      const fb = document.querySelector(`.item[data-id="${i}"] .item-feedback`);
+      if (fb && data.fb) fb.value = data.fb;
+    }
+    update(true);
+  }
+
+  document.querySelectorAll('input[type=radio]').forEach(r => r.addEventListener('change', () => update()));
+  document.querySelectorAll('textarea').forEach(t => t.addEventListener('input', () => update()));
+  restore();
+</script>
+</body>
+</html>
