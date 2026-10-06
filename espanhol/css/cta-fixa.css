@@ -1,0 +1,88 @@
+/*
+ * RC snippet · cta-sticky-mobile
+ * Estado final (sem JS): a barra fica fixa e VISÍVEL no rodapé do celular, e a página reserva
+ * o espaço dela no fim — nada de conteúdo coberto. O JS só liga o modo "esconder até passar do
+ * hero" com a classe html.rc-cta-fixa-ativa; se o JS falhar, a classe some e volta este estado.
+ * Anima só transform. Desktop (≥ 800px): a barra não existe.
+ */
+.rc-cta-fixa {
+  --rc-cta-fixa-altura: 76px;               /* altura visual da barra (sem a safe-area) */
+  --rc-cta-fixa-fundo: var(--rc-cor-superficie, #1b1d1a);
+  --rc-cta-fixa-duracao: 0.32s;
+
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 90;                               /* acima do conteúdo, abaixo de modais (≥ 100) */
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  min-height: calc(var(--rc-cta-fixa-altura) + env(safe-area-inset-bottom, 0px));
+  padding: 0.625rem max(1rem, env(safe-area-inset-right, 0px)) calc(0.625rem + env(safe-area-inset-bottom, 0px)) max(1rem, env(safe-area-inset-left, 0px));
+  background: var(--rc-cta-fixa-fundo);
+  color: var(--rc-cor-texto);
+  border-top: 1px solid var(--rc-cor-linha);
+  box-shadow: 0 -12px 28px rgb(0 0 0 / 0.22);
+  transform: translateY(0);
+}
+
+/* Texto de apoio: preço/condição curta. Some em telas muito estreitas para o botão respirar. */
+.rc-cta-fixa__info {
+  display: grid;
+  min-width: 0;
+  line-height: 1.2;
+  flex: 0 1 auto;
+}
+.rc-cta-fixa__info strong { font-size: 1rem; white-space: nowrap; }
+.rc-cta-fixa__info span { font-size: 0.8125rem; color: var(--rc-cor-texto-suave); white-space: nowrap; }
+
+/* O botão: largura restante inteira, alvo ≥ 48px (WCAG 2.5.8 pede 24, a HIG/Material 44–48). */
+.rc-cta-fixa__botao {
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 52px;
+  padding: 0 1.1rem;
+  border-radius: var(--rc-raio, 3px);
+  background: var(--rc-cor-acento);
+  color: var(--rc-cor-acento-texto);
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;               /* sem atraso de duplo toque: INP do clique */
+}
+.rc-cta-fixa__botao:active { transform: translateY(1px); }
+.rc-cta-fixa__botao svg { width: 18px; height: 18px; flex: none; }
+
+@media (max-width: 359px) {
+  .rc-cta-fixa__info { display: none; }
+}
+
+/* Reserva o espaço da barra no fim da página: o último conteúdo nunca fica embaixo dela. */
+body:has(> .rc-cta-fixa) {
+  padding-bottom: calc(var(--rc-cta-fixa-reserva, 76px) + env(safe-area-inset-bottom, 0px));
+}
+
+/* ---------- Modo com JS: escondida até o CTA do hero sair da tela ---------- */
+.rc-cta-fixa-ativa .rc-cta-fixa {
+  transform: translateY(calc(100% + 16px)); /* +16px leva a sombra junto */
+  transition: transform var(--rc-cta-fixa-duracao) var(--rc-ease, cubic-bezier(0.22, 1, 0.36, 1));
+}
+.rc-cta-fixa-ativa .rc-cta-fixa.is-visivel { transform: translateY(0); }
+
+/* Reduced-motion: aparece e some sem deslizar (a base também zera transições). */
+@media (prefers-reduced-motion: reduce) {
+  .rc-cta-fixa-ativa .rc-cta-fixa { transition: none; }
+}
+
+/* Desktop: não existe (o CTA do desktop mora na página e no topo). */
+@media (min-width: 800px) {
+  .rc-cta-fixa { display: none; }
+  body:has(> .rc-cta-fixa) { padding-bottom: 0; }
+}
+
+/* Impressão: fora. */
+@media print { .rc-cta-fixa { display: none; } }
