@@ -121,6 +121,33 @@
     });
   });
 
+  // Vídeo: o botão por cima dá o play com som e liga os controles nativos.
+  var vsl = document.querySelector('.vsl');
+  var video = document.getElementById('vsl-video');
+  function tocarVideo() {
+    if (!vsl || !video) return;
+    vsl.classList.add('is-tocando');
+    video.controls = true;
+    var p = video.play();
+    if (p && p.catch) p.catch(function () { /* navegador bloqueou: os controles ficam visíveis */ });
+  }
+  if (vsl && video) {
+    var botao = vsl.querySelector('.vsl__play');
+    if (botao) botao.addEventListener('click', tocarVideo);
+    video.addEventListener('ended', function () {
+      vsl.classList.remove('is-tocando');
+      video.controls = false;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-tocar-vsl]'), function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (RC.lenis) RC.lenis.scrollTo(vsl, { offset: -90 });
+        else vsl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        tocarVideo();
+      });
+    });
+  }
+
   // Depoimentos: no começo mostra só um trecho do mural; o botão abre o resto.
   var mural = document.getElementById('mural');
   var verMais = document.getElementById('ver-mais');
